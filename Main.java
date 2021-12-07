@@ -2,12 +2,13 @@ package com.company.zeroing;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Main {
 
     public static void main(String[] args) {
-        lab1();
-        //lab2();
+        //lab1();
+        lab2();
         //lab3();
     }
 
@@ -36,7 +37,27 @@ public class Main {
     }
 
     private static void lab2() {
-        // TODO
+        // Создание очереди
+        Queue<String> queue = new LinkedList<>();
+
+        // Добавление элементов
+        queue.offer("first");
+        queue.offer("second");
+        queue.offer("third");
+        queue.offer("fourth");
+
+        // Получим первый элемент и удали его
+        System.out.println(
+                queue.poll()
+        );
+
+        // Получим первый элемент без удаления
+        System.out.println(
+                queue.peek()
+        );
+
+        // Получим представление очереди в виде строки
+        System.out.println(queue);
     }
 
     private static void lab3() {
