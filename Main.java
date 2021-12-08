@@ -1,5 +1,8 @@
 package com.company.zeroing;
 
+import com.company.zeroing.binarytree.BinaryTree;
+import com.company.zeroing.binarytree.MyBinaryTree;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -8,8 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
         //lab1();
-        lab2();
-        //lab3();
+        //lab2();
+        lab3();
     }
 
     private static void lab1() {
@@ -61,6 +64,36 @@ public class Main {
     }
 
     private static void lab3() {
-        // TODO
+        // Создаём дерево
+        BinaryTree<Integer, String> binaryTree = new MyBinaryTree<>();
+        // Заполняем его узлами
+        binaryTree.add(6, "f");
+        binaryTree.add(4, "d");
+        binaryTree.add(9, "i");
+        binaryTree.add(2, "b");
+        binaryTree.add(5, "e");
+        binaryTree.add(7, "g");
+        binaryTree.add(18, "s");
+        binaryTree.add(1, "a");
+        binaryTree.add(3, "c");
+        binaryTree.add(15, "o");
+        binaryTree.add(12, "l");
+        binaryTree.add(16, "p");
+        binaryTree.add(14, "n");
+
+        // Удалим узел по ключу
+        System.out.println(
+                binaryTree.remove(9)
+        );
+
+        // Получим значение узла по ключу
+        System.out.println(
+                binaryTree.get(14)
+        );
+
+        System.out.println();
+
+        // Вывод дерева в консольный вывод
+        binaryTree.printToPrintStream(System.out);
     }
 }
