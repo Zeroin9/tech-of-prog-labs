@@ -1,4 +1,4 @@
-package com.company.zeroing;
+package com.company.zeroing.binarytree;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
@@ -12,13 +12,13 @@ import java.util.Objects;
  * Реализация бинарного дерева
  * @param <V> объект способный к сравнению с ему подобными
  */
-public class BinaryTree<V extends Comparable, E> {
+public class MyBinaryTree<V extends Comparable, E> {
     /**
      * Верхний элемент дерева
      */
     private Node<V, E> top;
 
-    public BinaryTree() {
+    public MyBinaryTree() {
         top = null;
     }
 
@@ -167,7 +167,9 @@ public class BinaryTree<V extends Comparable, E> {
             throw new NullPointerException("key is null");
         }
 
-        return getNodeRecursive(top, key).getValue();
+        Node<V, E> node = getNodeRecursive(top, key);
+
+        return node != null ? node.getValue() : null;
     }
 
     /**
@@ -288,52 +290,6 @@ public class BinaryTree<V extends Comparable, E> {
                 }
         }
         throw new IllegalStateException("compareTo() return not -1, 0 or 1");
-    }
-
-    /**
-     * Поиск минимального элемента
-     *  (до упора влево)
-     * @return минимальный элемент или null если дерево пустое
-     */
-    @Nullable
-    public E getMinKey() {
-        // Если дерево пустое
-        if (top == null) {
-            return null;
-        }
-
-        Node<V, E> previous = null;
-        Node<V, E> current = top;
-
-        while (current != null) {
-            previous = current;
-            current = previous.getLeft();
-        }
-
-        return previous.getValue();
-    }
-
-    /**
-     * Поиск максимального элемента
-     *  (до упора вправо)
-     * @return масимальный элемент или null если дерево пустое
-     */
-    @Nullable
-    public E getMaxKey() {
-        // Если дерево пустое
-        if (top == null) {
-            return null;
-        }
-
-        Node<V, E> previous = null;
-        Node<V, E> current = top;
-
-        while (current != null) {
-            previous = current;
-            current = previous.getRight();
-        }
-
-        return previous.getValue();
     }
 
     private int compareNodes(@NotNull Node<V, E> a, @NotNull Node<V, E> b) {
