@@ -1,8 +1,5 @@
 package com.company.zeroing.binarytree;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
 /**
  * Бинарное дерево. Это структура данных, где каждый объект является узлом.
  *  Каждый узел может иметь два узла-потомка: левый узел и правый узел.
@@ -25,8 +22,9 @@ public interface BinaryTree<V extends Comparable, E> {
      * Если ключи во время прохода по дереву сравняются - просто заменить значение в узле.
      * @param key ключ
      * @param value значение
+     * @throws NullPointerException если передаваемый ключ это null
      */
-    void add(@NotNull V key, @Nullable E value);
+    void add(V key, E value) throws NullPointerException;
 
     /**
      * Удаление в дереве происходит по следующему принципу:
@@ -37,14 +35,16 @@ public interface BinaryTree<V extends Comparable, E> {
      *  ссылками на минимальный дочерний узел правого узла удаляемого узла (влево до упора)
      * @param key ключ
      * @return true если элемент удалён (был найден)
+     * @throws NullPointerException если передаваемый ключ это null
      */
-    boolean remove(@NotNull V key);
+    boolean remove(V key) throws NullPointerException;
 
     /**
      * Получение значения по ключу
      * @param key ключ
      * @return значение (value) или null, если не найден ключ
+     * @throws NullPointerException если передаваемый ключ это null
      */
-    E get(@NotNull V key);
+    E get(V key) throws NullPointerException;
 
 }

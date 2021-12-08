@@ -1,8 +1,5 @@
 package com.company.zeroing.binarytree;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.Objects;
  * @param <V> объект способный к сравнению с ему подобными
  * @param <E> значение
  */
-public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
+public class MyBinaryTree<V extends Comparable<V>, E> implements BinaryTree<V, E> {
     /**
      * Верхний элемент дерева
      */
@@ -27,8 +24,10 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
      * Добавление в дерево
      * @param key ключ
      * @param value значение
+     * @throws NullPointerException если передаваемый ключ это null
      */
-    public void add(@NotNull V key, E value) {
+    @Override
+    public void add(V key, E value) throws NullPointerException {
         if (key == null) {
             throw new NullPointerException("key is null");
         }
@@ -44,7 +43,7 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
         addRecursive(top, newNode);
     }
 
-    private void addRecursive(@NotNull Node<V, E> existing, @NotNull Node<V, E> newNode) {
+    private void addRecursive(Node<V, E> existing, Node<V, E> newNode) {
         if (existing == null) {
             throw new NullPointerException("'existing' is null");
         }
@@ -81,8 +80,10 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
      * Удаление узла из дерева
      * @param key ключ
      * @return true если элемент удалён (был найден)
+     * @throws NullPointerException если передаваемый ключ это null
      */
-    public boolean remove(@NotNull V key) {
+    @Override
+    public boolean remove(V key) {
         if (key == null) {
             throw new NullPointerException("key is null");
         }
@@ -153,14 +154,15 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
      * Получение значения по ключу
      * @param key ключ
      * @return значение (value) или null, если не найден ключ
+     * @throws NullPointerException если передаваемый ключ это null
      */
-    @Nullable
-    public E get(@NotNull V key) {
+    @Override
+    public E get(V key) throws NullPointerException {
         if (key == null) {
             throw new NullPointerException("key is null");
         }
 
-        Node<V, E> node = getNodeRecursive(top, key);
+        Node<V, E> node = getNode(key);
 
         return node != null ? node.getValue() : null;
     }
@@ -172,9 +174,9 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
      * Окончание поиска - равенство искомого и найденного ключа.
      * @param key ключ
      * @return узел с соответствующим ключом или null, если не найден ключ
+     * @throws NullPointerException если передаваемый ключ это null
      */
-    @Nullable
-    private Node<V, E> getNode(@NotNull V key) {
+    private Node<V, E> getNode(V key) throws NullPointerException {
         if (key == null) {
             throw new NullPointerException("key is null");
         }
@@ -187,8 +189,7 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
         return getNodeRecursive(top, key);
     }
 
-    @Nullable
-    private Node<V, E> getNodeRecursive(@NotNull Node<V, E> node, @NotNull V key) {
+    private Node<V, E> getNodeRecursive(Node<V, E> node, V key) {
         if (node == null) {
             throw new NullPointerException("'node' is null");
         }
@@ -227,8 +228,7 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
      *  1 - искомый узел.
      *  Или null если узел не найден
      */
-    @Nullable
-    private Node<V, E>[] getNodeWithParent(@NotNull V key) {
+    private Node<V, E>[] getNodeWithParent(V key) {
         if (key == null) {
             throw new NullPointerException("key is null");
         }
@@ -250,8 +250,7 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
      *  0 - родительский узел искомого узла,
      *  1 - искомый узел
      */
-    @Nullable
-    private Node<V, E>[] getNodeWithParentRecursive(Node<V, E> parent, @NotNull Node<V, E> node, @NotNull V key) {
+    private Node<V, E>[] getNodeWithParentRecursive(Node<V, E> parent, Node<V, E> node, V key) {
         if (node == null) {
             throw new NullPointerException("'node' is null");
         }
@@ -285,7 +284,7 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
         throw new IllegalStateException("compareTo() return not -1, 0 or 1");
     }
 
-    private int compareNodes(@NotNull Node<V, E> a, @NotNull Node<V, E> b) {
+    private int compareNodes(Node<V, E> a, Node<V, E> b) {
         if (a == null) {
             throw new NullPointerException("Node 'a' is null");
         }
@@ -295,7 +294,7 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
         return a.getKey().compareTo(b.getKey());
     }
 
-    private int compareKeys(@NotNull V a, @NotNull V b) {
+    private int compareKeys(V a, V b) {
         if (a == null) {
             throw new NullPointerException("Node 'a' is null");
         }
@@ -305,11 +304,11 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
         return a.compareTo(b);
     }
 
-    private void removeChild(@NotNull Node<V, E> parent, @NotNull Node<V, E> child) {
+    private void removeChild(Node<V, E> parent, Node<V, E> child) {
         replaceChild(parent, child, null);
     }
 
-    private void replaceChild(@NotNull Node<V, E> parent, @NotNull Node<V, E> child, @Nullable Node<V, E> newChild) {
+    private void replaceChild(Node<V, E> parent, Node<V, E> child, Node<V, E> newChild) {
         if (parent == null) {
             throw new NullPointerException("'parent' is null");
         }
@@ -329,11 +328,11 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
      * Класс узла дерева.
      * @param <V> объект способный к сравнению с ему подобными
      */
-    private class Node<V extends Comparable, E> {
+    private static class Node<V extends Comparable<V>, E> {
         /**
          * Ключ не должен быть null
          */
-        private V key;
+        private final V key;
         private E value;
         private Node <V, E> left;
         private Node <V, E> right;
@@ -343,7 +342,7 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
          * @param key не-null ключ
          * @param value значение
          */
-        public Node(@NotNull V key, E value) {
+        public Node(V key, E value) {
             if (key == null) {
                 throw new NullPointerException("key is null");
             }
@@ -356,10 +355,6 @@ public class MyBinaryTree<V extends Comparable, E> implements BinaryTree<V, E> {
 
         public V getKey() {
             return key;
-        }
-
-        public void setKey(V key) {
-            this.key = key;
         }
 
         public E getValue() {
