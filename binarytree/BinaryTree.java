@@ -1,5 +1,7 @@
 package com.company.zeroing.binarytree;
 
+import java.io.PrintStream;
+
 /**
  * Бинарное дерево. Это структура данных, где каждый объект является узлом.
  *  Каждый узел может иметь два узла-потомка: левый узел и правый узел.
@@ -46,5 +48,11 @@ public interface BinaryTree<V extends Comparable, E> {
      * @throws NullPointerException если передаваемый ключ это null
      */
     E get(V key) throws NullPointerException;
+
+    /**
+     * Выводит дерево в поток обёрнутый в PrintStream
+     * @param ps обёртка выходного потока
+     */
+    void printToPrintStream(PrintStream ps);
 
 }

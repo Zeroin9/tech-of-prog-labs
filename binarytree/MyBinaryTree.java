@@ -1,5 +1,6 @@
 package com.company.zeroing.binarytree;
 
+import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.util.Objects;
 
@@ -320,6 +321,31 @@ public class MyBinaryTree<V extends Comparable<V>, E> implements BinaryTree<V, E
         } else {
             throw new IllegalStateException("No such child in parent");
         }
+    }
+
+    @Override
+    public void printToPrintStream(PrintStream ps) {
+        recursivePrint(top, 0, ps);
+    }
+
+    private void recursivePrint(Node<V, E> node, int indent, PrintStream ps) {
+        ps.println(getIndent(indent) + "└──" + node.getValue());
+        if (node.getRight() != null) {
+            recursivePrint(node.getRight(), indent + 1, ps);
+        }
+        if (node.getLeft() != null) {
+            recursivePrint(node.getLeft(), indent + 1, ps);
+        }
+    }
+
+    private String getIndent(int size) {
+        String s = "";
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                s+= "│  ";
+            }
+        }
+        return s.toString();
     }
 
     /**
