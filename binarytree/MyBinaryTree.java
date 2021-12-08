@@ -112,12 +112,17 @@ public class MyBinaryTree<V extends Comparable<V>, E> implements BinaryTree<V, E
                     minNode = previous.getLeft();
                 }
 
-                // Удаляем ссылку на minNode у родительского узла previous
-                previous.setLeft(null);
+                // У родительского узла previous заменяем ссылку на minNode
+                //  ссылкой на правый узел minNode
+                previous.setLeft(minNode.getRight());
 
                 // У родительского узла удаляемого узла меняем ссылку
                 //  с удаляемого узла на minNode (минимум от правого узла)
                 replaceChild(parentNode, nodeToRemove, minNode);
+
+                // Новому узлу minNode назначаем ссылки от удалённого nodeToRemove
+                minNode.setRight(nodeToRemove.getRight());
+                minNode.setLeft(nodeToRemove.getLeft());
             } else {
                 // Если узлов слева от правого узла нет - он и есть минимум
 
