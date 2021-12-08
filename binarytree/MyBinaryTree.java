@@ -1,8 +1,6 @@
 package com.company.zeroing.binarytree;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -269,10 +267,10 @@ public class MyBinaryTree<V extends Comparable<V>, E> implements BinaryTree<V, E
                 }
                 // Если ключ равен
             case 0:
-                List<Node<V, E>> resultList = new ArrayList<>();
-                resultList.add(0, parent);
-                resultList.add(1, node);
-                return (Node<V, E>[]) Array.newInstance(parent.getClass(), resultList.size());
+                Node<V, E>[] result = (Node<V, E>[]) Array.newInstance(parent.getClass(), 2);
+                result[0] = parent;
+                result[1] = node;
+                return result;
             // Если ключ больше
             case 1:
                 if (node.getRight() != null) {
@@ -291,7 +289,7 @@ public class MyBinaryTree<V extends Comparable<V>, E> implements BinaryTree<V, E
         if (b == null) {
             throw new NullPointerException("Node 'b' is null");
         }
-        return a.getKey().compareTo(b.getKey());
+        return b.getKey().compareTo(a.getKey());
     }
 
     private int compareKeys(V a, V b) {
@@ -301,7 +299,7 @@ public class MyBinaryTree<V extends Comparable<V>, E> implements BinaryTree<V, E
         if (b == null) {
             throw new NullPointerException("Node 'b' is null");
         }
-        return a.compareTo(b);
+        return b.compareTo(a);
     }
 
     private void removeChild(Node<V, E> parent, Node<V, E> child) {
